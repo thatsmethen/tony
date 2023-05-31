@@ -1,47 +1,103 @@
-> # Trutone
->
-> TruTone is a web-based Digital Audio Workstation (DAW) plugin built using the `tone.js` library. The plugin provides a modular and extensible architecture for creating, editing, and processing audio in a browser-based environment. The TruTone plugin is designed to be used in music production applications and offers a comprehensive set of features, including instruments, sequencers, effects, filters, and analyzers.
->
-> ## Overview
->
-> The TruTone plugin consists of the following modules:
->
-> 1. TruTone: The main class that manages the overall state and configuration of the plugin. It is responsible for initializing instruments, sequencers, and other components based on a user-provided configuration.
->
-> 2. Instrument: A base class for creating polyphonic synthesizer instruments using the `tone.js` library. It provides methods for playing notes with varying durations and controlling instrument parameters such as volume and pan.
->
-> 3. Sample: A subclass of TruToneInstrument that allows for loading and playing back audio samples.
->
-> 4. Sequencer: A class that manages the playback of note sequences in different time signatures. It provides methods for scheduling events, pausing, restarting, stopping, and navigating to a specific time in the sequence.
->
-> 5. Effects: A class for creating and managing audio effects using the `tone.js` library. It provides methods for enabling/disabling (bypassing) the effect and controlling its parameters.
->
-> 6. Filters: A class for creating and managing audio filters using the `tone.js` library. It provides methods for enabling/disabling (bypassing) the filter and controlling its parameters.
->
-> 7. Analyzers: A class for creating and managing audio analyzers using the `tone.js` library. It provides methods for enabling/disabling (bypassing) the analyzer and accessing its analysis data.
->
-> ## Features
->
-> The TruTone plugin offers the following features:
->
-> 1. Configurable instruments: Users can create and configure polyphonic synthesizers and sample-based instruments using the Instrument and Sample classes.
->
-> 2. Configurable sequencers: Users can create and configure sequencers with different time signatures using the Sequencer class. The sequencers can control the playback of notes in the instruments.
->
-> 3. Tempo control: The TruTone class provides methods for setting and getting the global tempo (BPM) of the transport, which affects the playback speed of all sequences.
->
-> 4. Audio effects and filters: Users can create and configure audio effects and filters using the Effects and Filters classes. These components can be applied to individual instruments or the master output.
->
-> 5. Audio analyzers: Users can create and configure audio analyzers using the Analyzers class. These components can be used to visualize and analyze audio data in real-time.
->
-> 6. Parameter control: The TruTone plugin provides methods for controlling various parameters of the instruments, effects, filters, and analyzers, such as volume, pan, and bypass status.
->
-> ## Usage
->
-> To use the TruTone plugin, users must first create an instance of the TruTone class and provide a configuration object that defines the instruments, sequencers, and other components. The plugin then initializes the components and manages their state during the application's lifetime.
->
-> Users can interact with the TruTone plugin through its API, which provides methods for controlling the playback of sequences, adjusting instrument parameters, applying effects and filters, and accessing analyzer data.
->
-> The TruTone plugin is designed to be easily integrated into web-based DAW applications and can be used alongside other audio processing libraries and tools.
-> 
-> [it's a yakka]
+# Tony: a `tone.js` interface which don't suck so bad
+
+Tony is a comprehensive audio framework built on top of `tone.js` that provides a powerful and easy-to-use interface for creating and managing audio components. It manages instances of various audio components, like instruments, samples, recordings, and mastering, allowing users to apply audio effects, update configurations, and more.
+
+## Features
+
+- Manage instances of audio components with identifiers
+- Create and configure instruments, samples, and effects using Tone.js classes
+- Connect and disconnect components to create complex and intricate audio chains
+- Keep track of connections and configuration for easy updates and navigation
+- Utilize atomic design and human interaction principles
+
+## Installation
+
+Install Tony via npm:
+
+```bash
+npm install --save @thatsmethen/tony
+```
+OR
+```bash
+yarn add @thatsmethen/tony
+```
+
+## Quick Start
+
+First, create an instance of Tony:
+
+```javascript
+import { Tony } from "@thatsmethen/tony";
+
+const tony = new Tony();
+```
+
+You can then use Tony to create an instrument and play a note:
+
+```javascript
+// Create an instrument
+tony.createInstrument("myGuitar", { synthType: "PluckSynth" }); 
+
+// Play a note (every 'instrument' is polyphonic, so it expects an array
+tony.play("myGuitar", { time: 1, note: ["C4", "G4", "E4"], duration: "4n" });
+```
+
+## Classes
+
+### Tony
+
+`Tony` is the main class for managing instances of audio components across the entire package with identifiers. It provides access to create, update or delete audio components such as instruments, samples, recordings, and mastering.
+
+### Instrument
+
+An `Instrument` represents an audio instrument, such as an FMSynth instrument or a Piano. The `Instrument` class provides methods for playing and stopping notes, and creating instruments with configuration.
+
+### Sample
+
+`Sample` represents an audio sample that can be created from a URL. It provides methods for playing, stopping, and managing loops.
+
+### Effect
+
+An `Effect` is an audio effect that can be applied to instruments or samples. Available effect types include Filter, EQ3, AutoPanner, AutoWah, BitCrusher, Chebyshev, Chorus, Distortion, FeedbackDelay, Freeverb, JCReverb, Phaser, PingPongDelay, PitchShift, Reverb, Tremolo, Vibrato, and AutoFilter.
+
+## Advanced Use Case: Creating an FMSynth Instrument with Configuration
+
+To create an instrument with configuration from `tone.js`, use the `FMSynth` type and configure it accordingly. Here's an example:
+
+```javascript
+// Create an FMSynth instrument with configuration
+const synthIdentifier = "synth";
+const synthConfig = {
+  synthType: "FMSynth",
+  options: {
+    harmonicity: 3,
+    modulationIndex: 10,
+    oscillator: { type: "sine" },
+    envelope: { attack: 0.01, decay: 0.01, sustain: 1, release: 0.5 },
+    modulation: { type: "sine" },
+    modulationEnvelope: { attack: 0.5, decay: 0, sustain: 1, release: 0.5 }
+  }
+};
+tony.createInstrument(synthIdentifier, synthConfig);
+```
+
+## Connecting Nodes and Chaining Effects
+
+`TonyNode` contains methods to connect and disconnect nodes, allowing users to create complex and unique audio chains.
+
+Here's an example of connecting an instrument node to a reverb effect node:
+
+```javascript
+const sourceNode = tony.getNode(synthIdentifier);
+const effectNode = tony.getNode(reverbIdentifier);
+
+if (sourceNode && effectNode) {
+  sourceNode.connect(effectNode);
+}
+```
+
+## License
+
+This software is a proprietary product of **Yakka**. Unauthorized distribution, copying, or use is strictly prohibited without the prior consent of **Yakka**. All rights reserved 2023.
+
+For more information about using this software within the organization, please contact the legal department or refer to your organization's internal guidelines on software usage and licensing.

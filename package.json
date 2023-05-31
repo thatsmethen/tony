@@ -1,13 +1,30 @@
 {
-  "name": "@thatsmethen/trutone",
-  "version": "1.0.0",
-  "description": "TruTone is a wrapper for tone.js that is designed to be used in music production applications and offers a comprehensive set of features, including instruments, sequencers, effects, filters, and analyzers.",
-  "main": "src/index.js",
+  "name": "@thatsmethen/tony",
+  "version": "0.1.9",
+  "description": "tony is a wrapper for tone.js that is designed to be used in music production applications and offers a comprehensive set of features, including instruments, sequencers, effects, filters, and analyzers.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "prepack": "npmignore --auto"
+  },
   "dependencies": {
+    "audiobuffer-to-wav": "^1.0.0",
+    "lamejs": "^1.2.1",
+    "midi-writer-js": "^2.1.4",
     "tone": "^14.7.77"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com",
+    "ignore": [
+      "!dist/",
+      "test/",
+      "src/"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "npmignore": "^0.3.0"
   }
 }

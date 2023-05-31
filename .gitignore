@@ -1,12 +1,12 @@
 # Logs
 logs
 *.log
+.idea
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
-
 node_modules
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
@@ -53,6 +53,8 @@ web_modules/
 # Optional npm cache directory
 .npm
 
+.npmignore
+
 # Optional eslint cache
 .eslintcache
 
@@ -91,7 +93,6 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
@@ -101,6 +102,8 @@ dist
 
 # vuepress build output
 .vuepress/dist
+
+dist
 
 # vuepress v2.x temp and cache directory
 .temp
